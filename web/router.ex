@@ -3,10 +3,11 @@ defmodule Discuss.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session
+    plug :fetch_session 
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Discuss.Plugs.SetUser
   end
 
   pipeline :api do
@@ -24,6 +25,15 @@ defmodule Discuss.Router do
     # resources "/topics", TopicController
     resources "/", TopicController
   end 
+
+  scope "/auth", Discuss do 
+    pipe_through :browser
+    
+    get "/signout", AuthController, :signout
+    # accepts github, facetbook, etc. as a param
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", Discuss do
