@@ -31,4 +31,5 @@ config :ueberauth, Ueberauth,
       github: { Ueberauth.Strategy.Github, [] }
     ]
 
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   

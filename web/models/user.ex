@@ -1,8 +1,9 @@
 defmodule Discuss.User do 
     use Discuss.Web, :model
 
-    schema "users" do 
+    schema "users" do
         has_many :topics, Discuss.Topic
+        has_many :comments, Discuss.Comment 
         field :email, :string 
         field :provider, :string
         field :token, :string
